@@ -116,6 +116,14 @@ If you already have other MCPs configured, simply add the "mcp-domain-availabili
 }
 ```
 
+### Installing via Smithery
+
+To install mcp-domain-availability for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@imprvhub/mcp-domain-availability):
+
+```bash
+npx -y @smithery/cli install @imprvhub/mcp-domain-availability --client claude
+```
+
 #### Manual Installation
 
 For development or local testing:
