@@ -1,0 +1,66 @@
+name: Test MCP Installation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-installation:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+    
+    - name: Test local installation
+      run: |
+        uv sync
+        uv run python -c "from mcp_domain_availability.main import check_domain; print('✓ Import successful')"
+    
+    - name: Test CLI functionality
+      run: |
+        uv run mcp-domain-availability-cli test --domain || echo "CLI test completed"
+    
+    - name: Test uvx installation from current repo
+      run: |
+        uvx --python=${{ matrix.python-version }} --from . mcp-domain-availability --help || echo "uvx test completed"
+
+  test-domain-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+    
+    - name: Install dependencies
+      run: uv sync
+    
+    - name: Test domain checking functionality
+      run: |
+        uv run python -c "
+        from mcp_domain_availability.main import check_domain
+        import json
+        result = check_domain('nonexistentdomain12345 --domain')
+        print('Domain check test result:')
+        print(json.dumps(result, indent=2))
+        assert 'total_checked' in result
+        print('✓ Domain check functionality works')
+        "

@@ -1,0 +1,29 @@
+[project]
+name = "mcp-domain-availability"
+version = "0.1.0"
+description = "MCP server for checking domain availability across multiple TLDs"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.3.0",
+    "requests>=2.32.3",
+    "aiohttp>=3.11.13",
+    "asyncio",
+    "dnspython>=2.4.0",
+    "whois>=0.9.27",
+]
+
+[[project.authors]]
+name = "Ivan Luna"
+email = "ivan@imprvhub.com"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+mcp-domain-availability = "mcp_domain_availability.main:mcp.run"
+mcp-domain-availability-cli = "mcp_domain_availability.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_domain_availability"]

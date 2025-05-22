@@ -1,0 +1,1 @@
+# MCP Domain Availability Checker
