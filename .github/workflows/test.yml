@@ -56,11 +56,16 @@ jobs:
     - name: Test domain checking functionality
       run: |
         uv run python -c "
+        import asyncio
         from mcp_domain_availability.main import check_domain
         import json
-        result = check_domain('nonexistentdomain12345 --domain')
-        print('Domain check test result:')
-        print(json.dumps(result, indent=2))
-        assert 'total_checked' in result
-        print('✓ Domain check functionality works')
+        
+        async def test_check_domain():
+            result = await check_domain('nonexistentdomain12345 --domain')
+            print('Domain check test result:')
+            print(json.dumps(result, indent=2))
+            assert 'total_checked' in result
+            print('✓ Domain check functionality works')
+        
+        asyncio.run(test_check_domain())
         "
