@@ -2,15 +2,13 @@ FROM ghcr.io/astral-sh/uv:python3.10-bookworm-slim AS uv
 
 WORKDIR /app
 
-COPY uv.lock /app/
 COPY pyproject.toml /app/
 COPY README.md /app/
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     --mount=type=bind,source=README.md,target=README.md \
-    uv sync --frozen --no-dev --no-editable
+    uv sync --no-dev --no-editable
 
 ADD ./src/mcp_domain_availability /app/mcp_domain_availability
 
