@@ -1,61 +1,70 @@
-# MCP Domain Availability Checker
+## MCP Domain Availability Checker
 
 [![smithery badge](https://smithery.ai/badge/@imprvhub/mcp-domain-availability)](https://smithery.ai/server/@imprvhub/mcp-domain-availability)
 
 <table style="border-collapse: collapse; width: 100%; table-layout: fixed;">
 <tr>
-<td style="width: 40%; padding: 15px; vertical-align: middle; border: none;">A Model Context Protocol (MCP) integration that provides Claude Desktop with comprehensive domain availability checking across 300+ TLDs.</td>
+<td style="width: 40%; padding: 15px; vertical-align: middle; border: none;">A Model Context Protocol (MCP) integration that provides Claude Desktop with domain availability checking across popular TLDs.</td>
 <td style="width: 60%; padding: 0; vertical-align: middle; border: none; min-width: 300px; text-align: center;"><a href="https://glama.ai/mcp/servers/@imprvhub/mcp-domain-availability">
   <img style="max-width: 100%; height: auto; min-width: 300px;" src="https://glama.ai/mcp/servers/@imprvhub/mcp-domain-availability/badge" alt="Domain Availability MCP server" />
 </a></td>
 </tr>
 </table>
 
-## Features
+### Features
 
-- **Comprehensive Domain Checking**
-  - Check availability across 300+ TLD extensions
-  - Support for popular (.com, .io, .ai), country (.us, .uk, .de), and new TLDs (.app, .dev, .ninja)
-  - Dual verification using DNS and WHOIS for maximum accuracy
-  - Smart TLD suggestions prioritized by popularity and relevance
+- **Domain Availability Checking**
+  - Check availability across 50+ popular TLD extensions
+  - Support for popular (.com, .io, .ai), country (.us, .uk, .de), and new TLDs (.app, .dev, .tech)
+  - Dual verification using DNS and WHOIS for accuracy
+  - Smart TLD suggestions organized by popularity
 
-- **Advanced Search Capabilities**
+- **Search Capabilities**
   - Check specific domains with exact TLD matching
-  - Bulk checking across all supported extensions for a given name
-  - Fast parallel processing for simultaneous domain queries
-  - Intelligent filtering and sorting of results
+  - Bulk checking across supported extensions for a given name
+  - Parallel processing for faster domain queries
+  - Organized results by TLD categories
 
-- **MCP Resource Management**
-  - Zero-configuration setup with uvx package management
+- **MCP Integration**
+  - Easy setup with uvx package management
   - Seamless integration with Claude Desktop
   - Real-time availability status updates
-  - Detailed performance metrics and success rate tracking
+  - Performance metrics and timing information
 
-- **AI Agent Capabilities**
+- **AI Assistant Features**
   - Natural language domain queries through Claude
   - Automated domain suggestion workflows
-  - Batch processing for multiple domain names
-  - Smart recommendations based on availability patterns
+  - Smart recommendations based on availability
 
-## Requirements
+### Requirements
 
 - Python 3.10 or higher
 - Claude Desktop
 - [uv](https://docs.astral.sh/uv/) package manager
-- [Homebrew](https://brew.sh/) (recommended for macOS)
 
-### Dependencies Installation
+#### Dependencies Installation
 
-Install uv package manager:
+Install uv package manager using one of these methods:
+
+**Official installer (recommended):**
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-The MCP server automatically manages Python dependencies through uvx, requiring no manual dependency installation.
+**Homebrew (macOS/Linux):**
+```bash
+brew install uv
+```
 
-## Installation
+**Install Homebrew (if needed):**
+- Visit [https://brew.sh](https://brew.sh) for installation instructions on all operating systems
+- Or run: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
-### Zero-Clone Installation (Recommended)
+The MCP server automatically manages Python dependencies through uvx.
+
+### Installation
+
+#### Zero-Clone Installation (Recommended)
 
 The MCP Domain Availability Checker supports direct installation without cloning repositories, using uvx for package management.
 
@@ -90,11 +99,7 @@ If you already have other MCPs configured, simply add the "mcp-domain-availabili
 ```json
 {
   "mcpServers": {
-    "otherMcp1": {
-      "command": "...",
-      "args": ["..."]
-    },
-    "otherMcp2": {
+    "otherMcp": {
       "command": "...",
       "args": ["..."]
     },
@@ -111,7 +116,7 @@ If you already have other MCPs configured, simply add the "mcp-domain-availabili
 }
 ```
 
-### Manual Installation
+#### Manual Installation
 
 For development or local testing:
 
@@ -131,118 +136,70 @@ uv sync
 uv run src/mcp_domain_availability/main.py
 ```
 
-## Technical Implementation
+### How It Works
 
-MCP Domain Availability Checker is built on the Model Context Protocol, enabling Claude to perform comprehensive domain availability checks through multiple verification methods. The implementation consists of four main components:
+The MCP Domain Availability Checker uses multiple verification methods to determine domain availability:
 
-1. **Server (main.py)**
-   - Initializes the MCP server with Model Context Protocol standard
-   - Configures server capabilities for domain checking tools
-   - Establishes communication with Claude through stdio transport
+1. **DNS Resolution**: Checks if the domain resolves to an IP address
+2. **WHOIS Lookup**: Queries WHOIS databases for registration information
+3. **Socket Connection**: Falls back to socket-based checking when other methods aren't available
 
-2. **Domain Checker Engine**
-   - Implements DNS resolution for availability verification
-   - Performs WHOIS queries for additional validation
-   - Manages TLD database with 300+ supported extensions
-   - Handles parallel processing for bulk domain checks
+The tool combines results from these methods to provide accurate availability status, with parallel processing for checking multiple domains simultaneously.
 
-3. **TLD Management System**
-   - Maintains comprehensive database of popular, country, and new TLDs
-   - Implements smart prioritization based on popularity metrics
-   - Supports custom TLD filtering and categorization
-   - Provides intelligent domain suggestions
+### Available Tools
 
-4. **Results Processing**
-   - Formats availability results with detailed status information
-   - Generates performance metrics and success rate statistics
-   - Provides sorted recommendations by TLD popularity
-   - Handles error management and timeout scenarios
+#### Domain Checking
 
-### Agent Capabilities
+| Tool Name | Description | Usage |
+|-----------|-------------|-------|
+| `check_domain` | Check domain availability with --domain flag | `mysite.com --domain` or `mysite --domain` |
 
-The MCP Domain Availability Checker functions as an intelligent domain research agent by:
+### Supported TLD Categories
 
-- Processing natural language domain queries from Claude
-- Automatically expanding single names to check multiple TLD variations
-- Providing smart suggestions based on availability patterns
-- Generating comprehensive reports with statistical analysis
-- Supporting batch processing for multiple domain research tasks
-- Maintaining performance optimization for large-scale checks
+#### Popular TLDs (12)
+com, net, org, io, ai, app, dev, co, xyz, me, info, biz
 
-## Available Tools
+#### Country TLDs (35)
+us, uk, ca, au, de, fr, it, es, nl, jp, kr, cn, in, br, mx, ar, cl, co, pe, ru, pl, cz, ch, at, se, no, dk, fi, be, pt, gr, tr, za, eg, ma, ng, ke
 
-### Domain Checking Tools
+#### New TLDs
+tech, online, site, website, store, shop, cloud, digital, blog, news & more.
 
-| Tool Name | Description | Parameters |
-|-----------|-------------|------------|
-| `check_domain` | Check specific domain availability | `domain` (required) |
-| `check_domain_bulk` | Check domain across all TLDs | `name` (required), `tlds` (optional) |
-| `suggest_domains` | Generate domain suggestions | `keywords` (required), `limit` (optional) |
+### Example Usage
 
-## Supported TLD Categories
+Here are examples of how to use the MCP Domain Availability Checker with Claude:
 
-### Popular TLDs
-com, net, org, io, ai, app, dev, co, xyz, me, tech, online, cloud, site, store, blog, news, info, biz, pro, name, mobi
-
-### Country TLDs
-us, uk, ca, au, de, fr, it, es, nl, jp, kr, br, ar, mx, in, cn, ru, pl, se, no, dk, fi, ch, at, be, pt, gr, tr, za, eg, ng, ma
-
-### New Generic TLDs
-academy, agency, art, business, careers, coach, design, expert, fitness, guru, health, ninja, photography, solutions, studio, training, world, center, community, company, digital, education, email, group, house, international, land, life, live, management, marketing, media, network, news, photography, place, plus, properties, services, social, space, support, systems, team, technology, today, tools, town, travel, university, website, work, zone
-
-## Example Usage
-
-Here are realistic examples of how to use the MCP Domain Availability Checker with Claude:
-
-### Single Domain Check
+#### Single Domain Check
 
 ```
-Check if mysite.com is available
+Check if mysite.com is available using --domain
 ```
 
-```
-Is awesome.io available for registration?
-```
-
-### Bulk Domain Analysis
+#### Domain Name Research
 
 ```
-Check availability for "startup" across all popular TLDs
+Check availability for "startup" across all TLDs using --domain
 ```
 
-```
-Find available domains for "myapp" and show me the best options
-```
-
-### Domain Research
+#### Specific Domain Verification
 
 ```
-I need a domain for my tech company called "innovate" - what's available?
+Is awesome.io available? Use --domain to check
 ```
 
-```
-Check domain availability for "healthtech" and suggest alternatives if needed
-```
+### Output Format
 
-### Specific TLD Checking
+The tool provides comprehensive results including:
 
-```
-Check if these domains are available: mysite.com, mysite.io, mysite.ai, mysite.dev
-```
+- **Requested Domain**: Status of the exact domain queried (if specific TLD provided)
+- **Available Domains**: List of available domains sorted alphabetically
+- **Unavailable Domains**: List of registered domains
+- **Summary Statistics**: Breakdown by TLD categories (Popular, Country, New TLDs)
+- **Performance Metrics**: Check duration for each domain
 
-## Output Format
+### Troubleshooting
 
-The MCP Domain Availability Checker provides comprehensive results including:
-
-- **Requested Domain Status**: Availability of the exact domain queried
-- **Available Alternatives**: List of available domains sorted by TLD popularity
-- **Category Breakdown**: Results organized by Popular, Country, and New TLDs
-- **Performance Metrics**: Check duration, success rates, and response times
-- **Availability Summary**: Statistical overview of checked vs available domains
-
-## Troubleshooting
-
-### "Server disconnected" error
+#### "Server disconnected" error
 If you see connection errors in Claude Desktop:
 
 1. **Verify uvx installation**:
@@ -251,7 +208,6 @@ If you see connection errors in Claude Desktop:
 
 2. **Check Python version**:
    - Ensure Python 3.10+ is available: `python3 --version`
-   - The configuration specifies `--python=3.10` for compatibility
 
 ### DNS resolution issues
 If domain checks are failing:
@@ -262,9 +218,9 @@ If domain checks are failing:
 
 2. **Rate limiting**:
    - Large bulk checks may hit rate limits from DNS/WHOIS services
-   - Consider checking smaller batches if experiencing timeouts
+   - The tool uses a semaphore to limit concurrent requests to 20
 
-### Configuration issues
+#### Configuration issues
 If the MCP server isn't starting:
 
 1. **Verify configuration syntax**:
@@ -273,18 +229,17 @@ If the MCP server isn't starting:
 
 2. **Restart Claude Desktop**:
    - Close and restart Claude Desktop after configuration changes
-   - The MCP server will be automatically started on first use
 
 ## Development
 
-### Project Structure
+#### Project Structure
 
-- `src/mcp_domain_availability/main.py`: Main entry point and MCP server initialization
-- `src/mcp_domain_availability/checker.py`: Domain availability checking logic
-- `src/mcp_domain_availability/tlds.py`: TLD database and management
-- `src/mcp_domain_availability/utils.py`: Utility functions and helpers
+- `main.py`: Main entry point with MCP server and domain checking logic
+- Domain checking functions with DNS, WHOIS, and socket fallback methods
+- TLD management with categorized lists
+- Async processing for parallel domain checks
 
-### Building
+#### Building
 
 ```bash
 uv build
@@ -296,13 +251,13 @@ uv build
 uv run pytest
 ```
 
-### Local Development
+#### Local Development
 
 ```bash
-uv run src/mcp_domain_availability/main.py
+uv run main.py
 ```
 
-## Security Considerations
+### Security Considerations
 
 The MCP Domain Availability Checker makes external network requests to DNS servers and WHOIS services. Users should be aware that:
 
@@ -311,19 +266,19 @@ The MCP Domain Availability Checker makes external network requests to DNS serve
 - No personal information is transmitted beyond the domain names being checked
 - All queries are read-only and do not modify any external systems
 
-## Contributing
+### Contributing
 
-Contributions to the MCP Domain Availability Checker are welcome! Areas for improvement include:
+Contributions are welcome! Areas for improvement include:
 
 - Adding support for additional TLD categories
 - Implementing caching mechanisms for faster repeated queries
 - Enhancing WHOIS parsing for more detailed domain information
-- Adding support for premium domain marketplaces
 - Improving error handling and retry mechanisms
 
-## License
+### License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/imprvhub/mcp-domain-availability/blob/main/LICENSE) file for details.
+This project is licensed under the Mozilla Public License 2.0 - see the [LICENSE](https://github.com/imprvhub/mcp-domain-availability/blob/main/LICENSE) file for details.
+
 
 ## Related Links
 
@@ -331,8 +286,3 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 - [Claude Desktop](https://claude.ai/download)
 - [uv Package Manager](https://docs.astral.sh/uv/)
 - [MCP Series](https://github.com/mcp-series)
-
----
-
-**Repository:** [imprvhub/mcp-domain-availability](https://github.com/imprvhub/mcp-domain-availability)  
-**Author:** Ivan Luna ([@imprvhub](https://github.com/imprvhub))
