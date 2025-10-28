@@ -17,7 +17,7 @@ except ImportError:
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("Domain Availability Checker")
+mcp = FastMCP("Domain Availability Checker", host="0.0.0.0", port=8000)
 
 POPULAR_TLDS = [
     "com", "net", "org", "io", "ai", "app", "dev", "co", "xyz", "me", "info", "biz"
